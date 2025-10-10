@@ -1,0 +1,15 @@
+Package: OntarioGeohubR
+Title: Fetch Data from Ontario GeoHub
+Version: 0.0.0.1
+Authors@R:
+    person("Adam", "Cottrill", , "adam.cottrill@ontario.ca", role = c("aut", "cre"))
+Description: this package provides a number of functions that will
+    fetch geo-spatial resources available trough Ontario Geohub,
+    making them available in R for analysis and reporting.
+License: MIT + file LICENSE
+Imports:
+    httr,
+    geojsonsf
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
