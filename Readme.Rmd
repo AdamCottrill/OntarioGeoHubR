@@ -44,7 +44,8 @@ the function `fetch_fmz()` can be used to retrieved one or more
 fisheries management units and return them as a sf (simple feature)
 which can then be used for plotting or subsequent analysis.
 
-```{r fmz}
+```{r fmz, fig.width = 7, fig.height = 5, fig.cap = "Simple map of Fisheries Management Zones 10,11, and 12."}
+
 fmz <- fetch_fmz(10)
 unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
 
@@ -53,7 +54,7 @@ unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
 
 my_plot <- ggplot2::ggplot() +
   ggplot2::geom_sf(data = fmz, aes(fill = FISHERIES_MANAGEMENT_ZONE_ID))
-print(my_plot)
+
 ```
 
 

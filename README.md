@@ -60,10 +60,7 @@ unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
 ``` r
 my_plot <- ggplot2::ggplot() +
   ggplot2::geom_sf(data = fmz, aes(fill = FISHERIES_MANAGEMENT_ZONE_ID))
-print(my_plot)
 ```
-
-![](Readme_files/figure-gfm/fmz-1.png)<!-- -->
 
 # MNR Districts
 
