@@ -10,11 +10,13 @@
 ##' @return partial api query string
 ##' @author R. Adam Cottrill
 build_name_like <- function(name_like) {
+  encoded <- utils::URLencode(name_like)
+
   name_like <- paste0(
-    sprintf("UNOFFICIAL_NAME+LIKE+'%%%s%%'", name_like),
-    sprintf("+OR+EQUIVALENT_FRENCH_NAME+LIKE+'%%%s%%'", name_like),
-    sprintf("+OR+OFFICIAL_ALTERNATE_NAME+LIKE+'%%%s%%'", name_like),
-    sprintf("+OR+OFFICIAL_NAME+LIKE+'%%%s%%'", name_like)
+    sprintf("UNOFFICIAL_NAME+LIKE+'%%%s%%'", encoded),
+    sprintf("+OR+EQUIVALENT_FRENCH_NAME+LIKE+'%%%s%%'", encoded),
+    sprintf("+OR+OFFICIAL_ALTERNATE_NAME+LIKE+'%%%s%%'", encoded),
+    sprintf("+OR+OFFICIAL_NAME+LIKE+'%%%s%%'", encoded)
   )
 }
 
@@ -34,11 +36,13 @@ build_name_like <- function(name_like) {
 ##' @return partial api query string
 ##' @author R. Adam Cottrill
 build_name_starts_with <- function(name_starts_with) {
-  name_starts_with <- paste0(
-    sprintf("UNOFFICIAL_NAME+LIKE+'%%%s'", name_starts_with),
-    sprintf("+OR+EQUIVALENT_FRENCH_NAME+LIKE+'%%%s'", name_starts_with),
-    sprintf("+OR+OFFICIAL_ALTERNATE_NAME+LIKE+'%%%s'", name_starts_with),
-    sprintf("+OR+OFFICIAL_NAME+LIKE+'%%%s'", name_starts_with)
+  encoded <- utils::URLencode(name_starts_with)
+
+  encoded <- paste0(
+    sprintf("UNOFFICIAL_NAME+LIKE+'%%%s'", encoded),
+    sprintf("+OR+EQUIVALENT_FRENCH_NAME+LIKE+'%%%s'", encoded),
+    sprintf("+OR+OFFICIAL_ALTERNATE_NAME+LIKE+'%%%s'", encoded),
+    sprintf("+OR+OFFICIAL_NAME+LIKE+'%%%s'", encoded)
   )
 }
 ##' Build waterbody name ends with
@@ -55,11 +59,13 @@ build_name_starts_with <- function(name_starts_with) {
 ##' @return partial api query string
 ##' @author R. Adam Cottrill
 build_name_ends_with <- function(name_ends_with) {
+  encoded <- utils::URLencode(name_ends_with)
+
   name_ends_with <- paste0(
-    sprintf("UNOFFICIAL_NAME+LIKE+'%s%%'", name_ends_with),
-    sprintf("+OR+EQUIVALENT_FRENCH_NAME+LIKE+'%s%%'", name_ends_with),
-    sprintf("+OR+OFFICIAL_ALTERNATE_NAME+LIKE+'%s%%'", name_ends_with),
-    sprintf("+OR+OFFICIAL_NAME+LIKE+'%s%%'", name_ends_with)
+    sprintf("UNOFFICIAL_NAME+LIKE+'%s%%'", encoded),
+    sprintf("+OR+EQUIVALENT_FRENCH_NAME+LIKE+'%s%%'", encoded),
+    sprintf("+OR+OFFICIAL_ALTERNATE_NAME+LIKE+'%s%%'", encoded),
+    sprintf("+OR+OFFICIAL_NAME+LIKE+'%s%%'", encoded)
   )
 }
 
@@ -216,6 +222,7 @@ fetch_waterbody <- function(
     "arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open08/MapServer/17/",
     query
   )
+
   sf_object <- fetch_geojson_as_sf(url)
   return(sf_object)
 }

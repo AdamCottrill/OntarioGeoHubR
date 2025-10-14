@@ -60,7 +60,15 @@ unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
 ``` r
 my_plot <- ggplot2::ggplot() +
   ggplot2::geom_sf(data = fmz, aes(fill = FISHERIES_MANAGEMENT_ZONE_ID))
+print(my_plot)
 ```
+
+<figure>
+<img src="Readme_files/figure-gfm/fmz-1.png"
+alt="Simple map of Fisheries Management Zones 10,11, and 12." />
+<figcaption aria-hidden="true">Simple map of Fisheries Management Zones
+10,11, and 12.</figcaption>
+</figure>
 
 # MNR Districts
 
@@ -79,11 +87,11 @@ unique(dist$DISTRICT_NAME)
     ## [1] "Aurora Midhurst Owen Sound District"
 
 ``` r
-dist <- fetch_mnr_district(name_like = c("Aurora", "Owen Sound"))
+dist <- fetch_mnr_district(name_like = c("Aurora", "Guelph"))
 unique(dist$DISTRICT_NAME)
 ```
 
-    ## [1] "Aurora Midhurst Owen Sound District"
+    ## [1] "Aurora Midhurst Owen Sound District" "Aylmer Guelph District"
 
 ``` r
 my_plot <- ggplot2::ggplot() +
@@ -91,7 +99,12 @@ my_plot <- ggplot2::ggplot() +
 print(my_plot)
 ```
 
-![](Readme_files/figure-gfm/district-1.png)<!-- -->
+<figure>
+<img src="Readme_files/figure-gfm/district-1.png"
+alt="Simple map of Aurora and Guelph Districts." />
+<figcaption aria-hidden="true">Simple map of Aurora and Guelph
+Districts.</figcaption>
+</figure>
 
 # Conservation Authorities
 
@@ -123,7 +136,12 @@ my_plot <- ggplot2::ggplot() +
 print(my_plot)
 ```
 
-![](Readme_files/figure-gfm/conservation_authority-1.png)<!-- -->
+<figure>
+<img src="Readme_files/figure-gfm/conservation_authority-1.png"
+alt="Simple map of Saugeen and Maitland Con. Auth." />
+<figcaption aria-hidden="true">Simple map of Saugeen and Maitland Con.
+Auth.</figcaption>
+</figure>
 
 # Waterbodies
 
@@ -173,7 +191,7 @@ print(
     ## 7            lac des Bois                   <NA> POLYGON ((-95.07566 49.3717...
 
 ``` r
-wby <- fetch_waterbody(name_like = c("Saugeen", "Bruce"))
+wby <- fetch_waterbody(name_like = c("Shanty Bay", "Begman"))
 
 print(
   wby[
@@ -193,40 +211,24 @@ print(
     ## Simple feature collection with 7 features and 6 fields
     ## Geometry type: GEOMETRY
     ## Dimension:     XY
-    ## Bounding box:  xmin: -81.37382 ymin: 43.95413 xmax: -79.51786 ymax: 48.81057
+    ## Bounding box:  xmin: -92.77238 ymin: 45.01518 xmax: -77.63065 ymax: 51.15783
     ## Geodetic CRS:  WGS 84
-    ##   WATERBODY_IDENT                OFFICIAL_NAME WATERBODY_IDENT.1
-    ## 1   17-4709-49273                Saugeen River     17-4709-49273
-    ## 2   17-5093-48939          Rocky Saugeen River     17-5093-48939
-    ## 3   17-4979-48866         Beatty Saugeen River     17-4979-48866
-    ## 4   17-6065-54060                Saugeen Creek     17-6065-54060
-    ## 5   17-4973-48883          South Saugeen River     17-4973-48883
-    ## 6   17-5267-49065 West Arm Rocky Saugeen River     17-5267-49065
-    ## 7   17-4787-49069          North Saugeen River     17-4787-49069
-    ##   UNOFFICIAL_NAME OFFICIAL_ALTERNATE_NAME
-    ## 1            <NA>                    <NA>
-    ## 2            <NA>                    <NA>
-    ## 3            <NA>                    <NA>
-    ## 4            <NA>                    <NA>
-    ## 5            <NA>                    <NA>
-    ## 6            <NA>                    <NA>
-    ## 7            <NA>                    <NA>
-    ##                   EQUIVALENT_FRENCH_NAME                       geometry
-    ## 1                        rivière Saugeen MULTIPOLYGON (((-81.34123 4...
-    ## 2                  rivière Rocky Saugeen MULTIPOLYGON (((-80.66386 4...
-    ## 3                 rivière Beatty Saugeen MULTIPOLYGON (((-81.00437 4...
-    ## 4                       ruisseau Saugeen POLYGON ((-79.54293 48.8078...
-    ## 5                    rivière Saugeen Sud MULTIPOLYGON (((-80.47771 4...
-    ## 6 bras Ouest de la rivière Rocky Saugeen POLYGON ((-80.66452 44.3134...
-    ## 7                   rivière Saugeen Nord MULTIPOLYGON (((-81.25838 4...
-
-``` r
-my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = wby, aes(fill = WATERBODY_IDENT))
-print(my_plot)
-```
-
-![](Readme_files/figure-gfm/waterbody-1.png)<!-- -->
+    ##   WATERBODY_IDENT          OFFICIAL_NAME WATERBODY_IDENT.1 UNOFFICIAL_NAME
+    ## 1   17-5752-50666       Shanty Bay Lakes     17-5752-50666            <NA>
+    ## 2   17-6195-49857             Shanty Bay     17-6195-49857            <NA>
+    ## 3   17-5752-50668 Middle Shanty Bay Lake     17-5752-50668            <NA>
+    ## 4   17-5752-50667             Shanty Bay     17-5752-50667            <NA>
+    ## 5   17-5480-51138             Shanty Bay     17-5480-51138            <NA>
+    ## 6   15-5163-56645             Shanty Bay     15-5163-56645            <NA>
+    ## 7   18-2949-50620       Burnt Shanty Bay     18-2949-50620            <NA>
+    ##   OFFICIAL_ALTERNATE_NAME EQUIVALENT_FRENCH_NAME                       geometry
+    ## 1                    <NA> lacs de la baie Shanty MULTIPOLYGON (((-80.03624 4...
+    ## 2                    <NA>            baie Shanty POLYGON ((-79.48439 45.0152...
+    ## 3                    <NA>  lac Middle Shanty Bay POLYGON ((-80.02483 45.7531...
+    ## 4                    <NA>            baie Shanty POLYGON ((-80.02659 45.7473...
+    ## 5                    <NA>            baie Shanty POLYGON ((-80.37812 46.1778...
+    ## 6                    <NA>            baie Shanty POLYGON ((-92.76747 51.1578...
+    ## 7                    <NA>      baie Burnt Shanty POLYGON ((-77.63095 45.6869...
 
 ``` r
 wby <- fetch_waterbody(wbylid = "15-3726-54565")
@@ -256,8 +258,16 @@ print(
     ## 1            lac des Bois                   <NA> POLYGON ((-95.07566 49.3717...
 
 ``` r
-# Lake of the Woods and Slippery Lake (to the north west of LOW)
-wby <- fetch_waterbody(wbylid = c("15-3726-54565", "15-3726-54565"))
+# three lakes in close proximity to each other:
+# "15-4877-53939" Rainy Lake
+# "15-3726-54565" Lake of the woods
+# "15-4390-54514" Kakagi Lake
+
+wbylids <- c("15-4877-53939",
+  "15-3726-54565",
+  "15-4390-54514")
+
+wby <- fetch_waterbody(wbylid = wbylids)
 print(
   wby[
     ,
@@ -273,15 +283,19 @@ print(
 )
 ```
 
-    ## Simple feature collection with 1 feature and 6 fields
-    ## Geometry type: POLYGON
+    ## Simple feature collection with 3 features and 6 fields
+    ## Geometry type: GEOMETRY
     ## Dimension:     XY
-    ## Bounding box:  xmin: -95.07566 ymin: 48.84562 xmax: -93.82818 ymax: 49.77069
+    ## Bounding box:  xmin: -95.07566 ymin: 48.48244 xmax: -92.54676 ymax: 49.77069
     ## Geodetic CRS:  WGS 84
     ##   WATERBODY_IDENT     OFFICIAL_NAME WATERBODY_IDENT.1 UNOFFICIAL_NAME
-    ## 1   15-3726-54565 Lake of the Woods     15-3726-54565            <NA>
+    ## 1   15-4390-54514       Kakagi Lake     15-4390-54514            <NA>
+    ## 2   15-4877-53939        Rainy Lake     15-4877-53939            <NA>
+    ## 3   15-3726-54565 Lake of the Woods     15-3726-54565            <NA>
     ##   OFFICIAL_ALTERNATE_NAME EQUIVALENT_FRENCH_NAME                       geometry
-    ## 1            lac des Bois                   <NA> POLYGON ((-95.07566 49.3717...
+    ## 1                    <NA>             lac Kakagi POLYGON ((-93.67178 49.2067...
+    ## 2          lac à la Pluie                   <NA> MULTIPOLYGON (((-93.63527 4...
+    ## 3            lac des Bois                   <NA> POLYGON ((-95.07566 49.3717...
 
 ``` r
 my_plot <- ggplot2::ggplot() +
@@ -289,7 +303,12 @@ my_plot <- ggplot2::ggplot() +
 print(my_plot)
 ```
 
-![](Readme_files/figure-gfm/waterbody-2.png)<!-- -->
+<figure>
+<img src="Readme_files/figure-gfm/waterbody-1.png"
+alt="Simple map of some selected waterbodies." />
+<figcaption aria-hidden="true">Simple map of some selected
+waterbodies.</figcaption>
+</figure>
 
 # Provincial Parks
 
@@ -306,11 +325,11 @@ unique(ppark$COMMON_SHORT_NAME)
     ## [1] "ALGONQUIN"
 
 ``` r
-ppark <- fetch_provincial_park(name_like = c("Algonquin", "Inverhuron"))
+ppark <- fetch_provincial_park(name_like = c("MacGregor", "Inverhuron"))
 unique(ppark$COMMON_SHORT_NAME)
 ```
 
-    ## [1] "INVERHURON  " "ALGONQUIN"
+    ## [1] "MACGREGOR POINT  " "INVERHURON  "
 
 ``` r
 my_plot <- ggplot2::ggplot() +
@@ -318,7 +337,12 @@ my_plot <- ggplot2::ggplot() +
 print(my_plot)
 ```
 
-![](Readme_files/figure-gfm/parks-1.png)<!-- -->
+<figure>
+<img src="Readme_files/figure-gfm/parks-1.png"
+alt="Simple map of some selected provincial parks." />
+<figcaption aria-hidden="true">Simple map of some selected provincial
+parks.</figcaption>
+</figure>
 
 # Townships
 
@@ -346,4 +370,9 @@ my_plot <- ggplot2::ggplot() +
 print(my_plot)
 ```
 
-![](Readme_files/figure-gfm/townships-1.png)<!-- -->
+<figure>
+<img src="Readme_files/figure-gfm/townships-1.png"
+alt="Simple map of some selected townships." />
+<figcaption aria-hidden="true">Simple map of some selected
+townships.</figcaption>
+</figure>

@@ -44,7 +44,7 @@ the function `fetch_fmz()` can be used to retrieved one or more
 fisheries management units and return them as a sf (simple feature)
 which can then be used for plotting or subsequent analysis.
 
-```{r fmz, fig.width = 7, fig.height = 5, fig.cap = "Simple map of Fisheries Management Zones 10,11, and 12."}
+```{r fmz, fig.cap = "Simple map of Fisheries Management Zones 10,11, and 12."}
 
 fmz <- fetch_fmz(10)
 unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
@@ -54,7 +54,7 @@ unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
 
 my_plot <- ggplot2::ggplot() +
   ggplot2::geom_sf(data = fmz, aes(fill = FISHERIES_MANAGEMENT_ZONE_ID))
-
+print(my_plot)
 ```
 
 
@@ -68,11 +68,11 @@ The function `fetch_mnr_district()` can be used to retrieved one or
 more districts that match a string (or vector of strings).
 
 
-```{r district}
+```{r district, fig.cap = "Simple map of Aurora and Guelph Districts."}
 dist <- fetch_mnr_district(name_like = "Aurora")
 unique(dist$DISTRICT_NAME)
 
-dist <- fetch_mnr_district(name_like = c("Aurora", "Owen Sound"))
+dist <- fetch_mnr_district(name_like = c("Aurora", "Guelph"))
 unique(dist$DISTRICT_NAME)
 
 my_plot <- ggplot2::ggplot() +
@@ -89,7 +89,7 @@ Conservation Authority.  The function `fetch_conservation_authority()`
 can be given a string or a vector of strings and will return
 conservation area object(s) with names that match.
 
-```{r conservation_authority}
+```{r conservation_authority, fig.cap = "Simple map of Saugeen and Maitland Con. Auth."}
 ca <- fetch_conservation_authority(name_like = "Saugeen")
 unique(ca$COMMON_NAME)
 
@@ -111,7 +111,7 @@ Identifier or partial matches to various name fields.
 
 
 
-```{r waterbody}
+```{r waterbody, fig.cap = "Simple map of some selected waterbodies."}
 wby <- fetch_waterbody(name_like = "Lake of the")
 print(
   wby[
@@ -127,7 +127,7 @@ print(
   ]
 )
 
-wby <- fetch_waterbody(name_like = c("Saugeen", "Bruce"))
+wby <- fetch_waterbody(name_like = c("Shanty Bay", "Begman"))
 
 print(
   wby[
@@ -143,10 +143,6 @@ print(
   ]
 )
 
-
-my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = wby, aes(fill = WATERBODY_IDENT))
-print(my_plot)
 
 
 wby <- fetch_waterbody(wbylid = "15-3726-54565")
@@ -164,8 +160,16 @@ print(
   ]
 )
 
-# Lake of the Woods and Slippery Lake (to the north west of LOW)
-wby <- fetch_waterbody(wbylid = c("15-3726-54565", "15-3726-54565"))
+# three lakes in close proximity to each other:
+# "15-4877-53939" Rainy Lake
+# "15-3726-54565" Lake of the woods
+# "15-4390-54514" Kakagi Lake
+
+wbylids <- c("15-4877-53939",
+  "15-3726-54565",
+  "15-4390-54514")
+
+wby <- fetch_waterbody(wbylid = wbylids)
 print(
   wby[
     ,
@@ -193,11 +197,11 @@ given a string or a vector of strings and will return parks with names
 that match those strings
 
 
-```{r parks}
+```{r parks, fig.cap = "Simple map of some selected provincial parks." }
 ppark <- fetch_provincial_park(name_like = "Algonquin")
 unique(ppark$COMMON_SHORT_NAME)
 
-ppark <- fetch_provincial_park(name_like = c("Algonquin", "Inverhuron"))
+ppark <- fetch_provincial_park(name_like = c("MacGregor", "Inverhuron"))
 unique(ppark$COMMON_SHORT_NAME)
 
 my_plot <- ggplot2::ggplot() +
@@ -205,14 +209,13 @@ my_plot <- ggplot2::ggplot() +
 print(my_plot)
 ```
 
-
 # Townships
 
 Townships are the fundamental land subdivision for the province of
 Ontario.  The function `fetch_township()` can be given a string or a
 vector of strings and will return township object with names that match.
 
-```{r townships}
+```{r townships, fig.cap = "Simple map of some selected townships."}
 twnshp <- fetch_township(name_like = "Saugeen")
 unique(twnshp$OFFICIAL_NAME)
 
