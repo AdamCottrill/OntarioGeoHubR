@@ -9,9 +9,11 @@
 ##' @param url - the url (including query parameters) to the requested
 ##'   geohub resource.
 ##' @return sf (simple feature) object
+##' @export
 ##' @author R. Adam Cottrill
 fetch_geojson_as_sf <- function(url) {
-  response <- httr::GET(url)
+  encoded_url <- utils::URLencode(url)
+  response <- httr::GET(encoded_url)
   if (httr::http_status(response)$category == "Success") {
     # Parse the JSON content
     geojson_string <- httr::content(response, "text", encoding = "UTF-8")

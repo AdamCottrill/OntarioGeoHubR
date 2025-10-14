@@ -9,11 +9,11 @@ fetch_fmz(fmz_number)
 \arguments{
 \item{fmz_number}{\itemize{
 \item a number or vector of numbers corresponding the
-Fisheries Management Zone numbers to retrieve from geohub.
+Fisheries Management Zone numbers to retrieve from geohub_domain.R
 }}
 }
 \value{
-a sf obect containing the geometry or geometries of the
+a sf object containing the geometry or geometries of the
 provided fisheries management zone(s).
 }
 \description{
@@ -22,13 +22,28 @@ Fetch fmz objects from Geohub
 \details{
 This function will connect to the Geohub api and return the
 matching records from the Ontario Fisheries Management Zone
-endpoint.  The geohub details page can be fount here:
-https://geohub.lio.gov.on.ca/datasets/lio::fisheries-management-zone/about
+endpoint.  The geohub details page can be found here:
+\url{https://geohub.lio.gov.on.ca/datasets/lio::fisheries-management-zone/about}
 
-This function current supports filters for fisheries management
+This function currently supports filters for fisheries management
 zone id - this can be a single integer, or a vector of integers
 (e.g. c(4,5,6)).  Only values between 1 and 20 are allowed.
-.
+}
+\examples{
+
+\donttest{
+fmz <- fetch_fmz(10)
+unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
+
+fmz <- fetch_fmz(c(10,11,12))
+unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
+
+my_plot <- ggplot2::ggplot() +
+ ggplot2::geom_sf(data = fmz, ggplot2::aes(fill = FISHERIES_MANAGEMENT_ZONE_ID))
+print(my_plot)
+
+}
+
 }
 \author{
 R. Adam Cottrill

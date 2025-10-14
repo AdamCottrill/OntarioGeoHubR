@@ -18,18 +18,21 @@ ids.
 }}
 
 \item{name_like}{\itemize{
-\item a sting to match against part of the waterbody
-name fields.
+\item a string to match against part of the waterbody
+name fields.  This can be a single string or character vector of
+strings.
 }}
 
 \item{name_starts_with}{\itemize{
-\item a sting to match against the start of
-the waterbody name fields.
+\item a string to match against the start of
+the waterbody name fields. This can be a single string or
+character vector of strings.
 }}
 
 \item{name_ends_with}{\itemize{
-\item a sting to match against the start of the
-waterbody name fields.
+\item a string to match against the start of the
+waterbody name fields.  This can be a single string or character
+vector of strings.
 }}
 }
 \value{
@@ -41,13 +44,89 @@ Fetch waterbody objects from Geohub
 \details{
 This function will connect to the Geohub api and return the
 matching records from the Ontario waterbody location identifier
-endpoint.  The geohub details page can be fount here:
-https://geohub.lio.gov.on.ca/datasets/lio::ontario-waterbody-location-identifier/about
+endpoint.  The geohub details page can be found here:
+\url{https://geohub.lio.gov.on.ca/datasets/lio::ontario-waterbody-location-identifier/about}
 
-This function current supports filters for waterbody body
-identifiers, as well as partial string matches (names contains,
+This function currently supports filters for waterbody body
+identifiers, as well as partial string matches (name contains,
 name starts with, and name ends with).  The string matches are
 case sensitive, so 'Huron' will not match "Inverhuron".
+}
+\examples{
+
+\donttest{
+wby <- fetch_waterbody(name_like='Lake of the')
+print(
+  wby[,
+    c(
+      "WATERBODY_IDENT",
+      "OFFICIAL_NAME",
+      "WATERBODY_IDENT",
+      "UNOFFICIAL_NAME",
+      "OFFICIAL_ALTERNATE_NAME",
+      "EQUIVALENT_FRENCH_NAME"
+
+    )
+  ]
+)
+
+wby <- fetch_waterbody(name_like=c('Saugeen', 'Sauble'))##'
+
+print(
+  wby[,
+    c(
+      "WATERBODY_IDENT",
+      "OFFICIAL_NAME",
+      "WATERBODY_IDENT",
+      "UNOFFICIAL_NAME",
+      "OFFICIAL_ALTERNATE_NAME",
+      "EQUIVALENT_FRENCH_NAME"##'
+    )
+  ]
+)
+
+
+my_plot <- ggplot2::ggplot() +
+ ggplot2::geom_sf(data = wby, ggplot2::aes(fill = WATERBODY_IDENT))
+print(my_plot)
+
+
+wby <- fetch_waterbody(wbylid='15-3726-54565')
+print(
+  wby[,
+    c(
+      "WATERBODY_IDENT",
+      "OFFICIAL_NAME",
+      "WATERBODY_IDENT",
+      "UNOFFICIAL_NAME",
+      "OFFICIAL_ALTERNATE_NAME",
+      "EQUIVALENT_FRENCH_NAME"
+
+    )
+  ]
+)
+
+# Lake of the Woods and Slippery Lake (to the north west of LOW)
+wby <- fetch_waterbody(wbylid=c('15-3726-54565', "15-3726-54565"))
+print(
+  wby[,
+    c(
+      "WATERBODY_IDENT",
+      "OFFICIAL_NAME",
+      "WATERBODY_IDENT",
+      "UNOFFICIAL_NAME",
+      "OFFICIAL_ALTERNATE_NAME",
+      "EQUIVALENT_FRENCH_NAME"
+    )
+  ]
+)
+
+my_plot <- ggplot2::ggplot() +
+ ggplot2::geom_sf(data = wby, ggplot2::aes(fill = WATERBODY_IDENT))
+print(my_plot)
+
+}
+
 }
 \author{
 R. Adam Cottrill

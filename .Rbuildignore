@@ -1,2 +1,4 @@
 ^LICENSE\.md$
 sandbox/*
+foo.org
+^README\.Rmd$
