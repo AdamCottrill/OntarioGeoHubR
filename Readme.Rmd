@@ -40,12 +40,11 @@ Fisheries Management Zones are the main spatial unit used by the
 Ontario Ministry of Natural Resource to manage fisheries resources
 across the province.
 
-the function `fetch_fmz()` can be used to retrieved one or more
-fisheries management units and return them as a sf (simple feature)
-which can then be used for plotting or subsequent analysis.
+The function `fetch_fmz()` can be used to retrieved one or more
+fisheries management units and return them as an sf (simple feature)
+object which can then be used for plotting or subsequent analysis.
 
 ```{r fmz, fig.cap = "Simple map of Fisheries Management Zones 10,11, and 12."}
-
 fmz <- fetch_fmz(10)
 unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
 
@@ -53,7 +52,7 @@ fmz <- fetch_fmz(c(10, 11, 12))
 unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
 
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = fmz, aes(fill = FISHERIES_MANAGEMENT_ZONE_ID))
+  ggplot2::geom_sf(data = fmz, ggplot2::aes(fill = FISHERIES_MANAGEMENT_ZONE_ID))
 print(my_plot)
 ```
 
@@ -76,7 +75,7 @@ dist <- fetch_mnr_district(name_like = c("Aurora", "Guelph"))
 unique(dist$DISTRICT_NAME)
 
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = dist, aes(fill = DISTRICT_NAME))
+  ggplot2::geom_sf(data = dist, ggplot2::aes(fill = DISTRICT_NAME))
 print(my_plot)
 ```
 
@@ -97,7 +96,7 @@ ca <- fetch_conservation_authority(name_like = c("Saugeen", "Maitland"))
 unique(ca$COMMON_NAME)
 
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = ca, aes(fill = COMMON_NAME))
+  ggplot2::geom_sf(data = ca, ggplot2::aes(fill = COMMON_NAME))
 print(my_plot)
 ```
 
@@ -112,18 +111,20 @@ Identifier or partial matches to various name fields.
 
 
 ```{r waterbody, fig.cap = "Simple map of some selected waterbodies."}
+# waterbody objects have a lot of fields, these are the ones we want to see:
+fields <- c(
+  "WATERBODY_IDENT",
+  "OFFICIAL_NAME",
+  "UNOFFICIAL_NAME",
+  "OFFICIAL_ALTERNATE_NAME",
+  "EQUIVALENT_FRENCH_NAME"
+)
+
 wby <- fetch_waterbody(name_like = "Lake of the")
 print(
   wby[
     ,
-    c(
-      "WATERBODY_IDENT",
-      "OFFICIAL_NAME",
-      "WATERBODY_IDENT",
-      "UNOFFICIAL_NAME",
-      "OFFICIAL_ALTERNATE_NAME",
-      "EQUIVALENT_FRENCH_NAME"
-    )
+    fields
   ]
 )
 
@@ -132,14 +133,7 @@ wby <- fetch_waterbody(name_like = c("Shanty Bay", "Begman"))
 print(
   wby[
     ,
-    c(
-      "WATERBODY_IDENT",
-      "OFFICIAL_NAME",
-      "WATERBODY_IDENT",
-      "UNOFFICIAL_NAME",
-      "OFFICIAL_ALTERNATE_NAME",
-      "EQUIVALENT_FRENCH_NAME"
-    )
+    fields
   ]
 )
 
@@ -149,43 +143,31 @@ wby <- fetch_waterbody(wbylid = "15-3726-54565")
 print(
   wby[
     ,
-    c(
-      "WATERBODY_IDENT",
-      "OFFICIAL_NAME",
-      "WATERBODY_IDENT",
-      "UNOFFICIAL_NAME",
-      "OFFICIAL_ALTERNATE_NAME",
-      "EQUIVALENT_FRENCH_NAME"
-    )
+    fields
   ]
 )
 
 # three lakes in close proximity to each other:
 # "15-4877-53939" Rainy Lake
-# "15-3726-54565" Lake of the woods
+# "15-3726-54565" Lake of the Woods
 # "15-4390-54514" Kakagi Lake
 
-wbylids <- c("15-4877-53939",
+wbylids <- c(
+  "15-4877-53939",
   "15-3726-54565",
-  "15-4390-54514")
+  "15-4390-54514"
+)
 
 wby <- fetch_waterbody(wbylid = wbylids)
 print(
   wby[
     ,
-    c(
-      "WATERBODY_IDENT",
-      "OFFICIAL_NAME",
-      "WATERBODY_IDENT",
-      "UNOFFICIAL_NAME",
-      "OFFICIAL_ALTERNATE_NAME",
-      "EQUIVALENT_FRENCH_NAME"
-    )
+    fields
   ]
 )
 
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = wby, aes(fill = WATERBODY_IDENT))
+  ggplot2::geom_sf(data = wby, ggplot2::aes(fill = WATERBODY_IDENT))
 print(my_plot)
 ```
 
@@ -205,7 +187,7 @@ ppark <- fetch_provincial_park(name_like = c("MacGregor", "Inverhuron"))
 unique(ppark$COMMON_SHORT_NAME)
 
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = ppark, aes(fill = COMMON_SHORT_NAME))
+  ggplot2::geom_sf(data = ppark, ggplot2::aes(fill = COMMON_SHORT_NAME))
 print(my_plot)
 ```
 
@@ -223,6 +205,6 @@ twnshp <- fetch_township(name_like = c("Saugeen", "Bruce"))
 unique(twnshp$OFFICIAL_NAME)
 
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = twnshp, aes(fill = OFFICIAL_NAME))
+  ggplot2::geom_sf(data = twnshp, ggplot2::aes(fill = OFFICIAL_NAME))
 print(my_plot)
 ```

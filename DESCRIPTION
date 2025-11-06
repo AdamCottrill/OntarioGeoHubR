@@ -1,6 +1,6 @@
 Package: OntarioGeohubR
 Title: Fetch Data from Ontario GeoHub
-Version: 0.0.0.1
+Version: 2025.11.6
 Authors@R:
     person("Adam", "Cottrill", , "adam.cottrill@ontario.ca", role = c("aut", "cre"))
 Description: this package provides a number of functions that will

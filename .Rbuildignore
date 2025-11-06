@@ -2,3 +2,4 @@
 sandbox/*
 foo.org
 ^README\.Rmd$
+Readme_files/*
