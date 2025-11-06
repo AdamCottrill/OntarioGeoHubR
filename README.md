@@ -39,9 +39,9 @@ Fisheries Management Zones are the main spatial unit used by the Ontario
 Ministry of Natural Resource to manage fisheries resources across the
 province.
 
-the function `fetch_fmz()` can be used to retrieved one or more
-fisheries management units and return them as a sf (simple feature)
-which can then be used for plotting or subsequent analysis.
+The function `fetch_fmz()` can be used to retrieved one or more
+fisheries management units and return them as an sf (simple feature)
+object which can then be used for plotting or subsequent analysis.
 
 ``` r
 fmz <- fetch_fmz(10)
@@ -59,7 +59,7 @@ unique(fmz$FISHERIES_MANAGEMENT_ZONE_ID)
 
 ``` r
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = fmz, aes(fill = FISHERIES_MANAGEMENT_ZONE_ID))
+  ggplot2::geom_sf(data = fmz, ggplot2::aes(fill = FISHERIES_MANAGEMENT_ZONE_ID))
 print(my_plot)
 ```
 
@@ -95,7 +95,7 @@ unique(dist$DISTRICT_NAME)
 
 ``` r
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = dist, aes(fill = DISTRICT_NAME))
+  ggplot2::geom_sf(data = dist, ggplot2::aes(fill = DISTRICT_NAME))
 print(my_plot)
 ```
 
@@ -132,7 +132,7 @@ unique(ca$COMMON_NAME)
 
 ``` r
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = ca, aes(fill = COMMON_NAME))
+  ggplot2::geom_sf(data = ca, ggplot2::aes(fill = COMMON_NAME))
 print(my_plot)
 ```
 
@@ -152,43 +152,45 @@ can be used to retrieve waterbodies by Waterbody Identifier or partial
 matches to various name fields.
 
 ``` r
+# waterbody objects have a lot of fields, these are the ones we want to see:
+fields <- c(
+  "WATERBODY_IDENT",
+  "OFFICIAL_NAME",
+  "UNOFFICIAL_NAME",
+  "OFFICIAL_ALTERNATE_NAME",
+  "EQUIVALENT_FRENCH_NAME"
+)
+
 wby <- fetch_waterbody(name_like = "Lake of the")
 print(
   wby[
     ,
-    c(
-      "WATERBODY_IDENT",
-      "OFFICIAL_NAME",
-      "WATERBODY_IDENT",
-      "UNOFFICIAL_NAME",
-      "OFFICIAL_ALTERNATE_NAME",
-      "EQUIVALENT_FRENCH_NAME"
-    )
+    fields
   ]
 )
 ```
 
-    ## Simple feature collection with 7 features and 6 fields
+    ## Simple feature collection with 7 features and 5 fields
     ## Geometry type: GEOMETRY
     ## Dimension:     XY
     ## Bounding box:  xmin: -95.07566 ymin: 44.34254 xmax: -75.94861 ymax: 49.77069
     ## Geodetic CRS:  WGS 84
-    ##   WATERBODY_IDENT         OFFICIAL_NAME WATERBODY_IDENT.1 UNOFFICIAL_NAME
-    ## 1   15-3911-54691      Lake of the Bays     15-3911-54691            <NA>
-    ## 2   17-4463-51322 Lake of the Mountains     17-4463-51322            <NA>
-    ## 3   18-3445-50161     Lake of the Hills     18-3445-50161            <NA>
-    ## 4   17-4845-51050     Lake of the Woods     17-4845-51050            <NA>
-    ## 5   18-3773-49580     Lake of the Hills     18-3773-49580            <NA>
-    ## 6   18-4229-49091     Lake of the Isles     18-4229-49091            <NA>
-    ## 7   15-3726-54565     Lake of the Woods     15-3726-54565            <NA>
-    ##   OFFICIAL_ALTERNATE_NAME EQUIVALENT_FRENCH_NAME                       geometry
-    ## 1                    <NA>       Lake of the Bays MULTIPOLYGON (((-94.50013 4...
-    ## 2                    <NA>  Lake of the Mountains POLYGON ((-81.69381 46.3453...
-    ## 3                    <NA>      Lake of the Hills POLYGON ((-76.97788 45.2868...
-    ## 4                    <NA>      Lake of the Woods POLYGON ((-81.20571 46.1021...
-    ## 5                    <NA>      Lake of the Hills POLYGON ((-76.552 44.76174,...
-    ## 6                    <NA>      Lake of the Isles POLYGON ((-75.95064 44.3497...
-    ## 7            lac des Bois                   <NA> POLYGON ((-95.07566 49.3717...
+    ##   WATERBODY_IDENT         OFFICIAL_NAME UNOFFICIAL_NAME OFFICIAL_ALTERNATE_NAME
+    ## 1   15-3911-54691      Lake of the Bays            <NA>                    <NA>
+    ## 2   17-4463-51322 Lake of the Mountains            <NA>                    <NA>
+    ## 3   18-3445-50161     Lake of the Hills            <NA>                    <NA>
+    ## 4   17-4845-51050     Lake of the Woods            <NA>                    <NA>
+    ## 5   18-3773-49580     Lake of the Hills            <NA>                    <NA>
+    ## 6   18-4229-49091     Lake of the Isles            <NA>                    <NA>
+    ## 7   15-3726-54565     Lake of the Woods            <NA>            lac des Bois
+    ##   EQUIVALENT_FRENCH_NAME                       geometry
+    ## 1       Lake of the Bays MULTIPOLYGON (((-94.50013 4...
+    ## 2  Lake of the Mountains POLYGON ((-81.69381 46.3453...
+    ## 3      Lake of the Hills POLYGON ((-76.97788 45.2868...
+    ## 4      Lake of the Woods POLYGON ((-81.20571 46.1021...
+    ## 5      Lake of the Hills POLYGON ((-76.552 44.76174,...
+    ## 6      Lake of the Isles POLYGON ((-75.95064 44.3497...
+    ## 7                   <NA> POLYGON ((-95.07566 49.3717...
 
 ``` r
 wby <- fetch_waterbody(name_like = c("Shanty Bay", "Begman"))
@@ -196,31 +198,24 @@ wby <- fetch_waterbody(name_like = c("Shanty Bay", "Begman"))
 print(
   wby[
     ,
-    c(
-      "WATERBODY_IDENT",
-      "OFFICIAL_NAME",
-      "WATERBODY_IDENT",
-      "UNOFFICIAL_NAME",
-      "OFFICIAL_ALTERNATE_NAME",
-      "EQUIVALENT_FRENCH_NAME"
-    )
+    fields
   ]
 )
 ```
 
-    ## Simple feature collection with 7 features and 6 fields
+    ## Simple feature collection with 7 features and 5 fields
     ## Geometry type: GEOMETRY
     ## Dimension:     XY
     ## Bounding box:  xmin: -92.77238 ymin: 45.01518 xmax: -77.63065 ymax: 51.15783
     ## Geodetic CRS:  WGS 84
-    ##   WATERBODY_IDENT          OFFICIAL_NAME WATERBODY_IDENT.1 UNOFFICIAL_NAME
-    ## 1   17-5752-50666       Shanty Bay Lakes     17-5752-50666            <NA>
-    ## 2   17-6195-49857             Shanty Bay     17-6195-49857            <NA>
-    ## 3   17-5752-50668 Middle Shanty Bay Lake     17-5752-50668            <NA>
-    ## 4   17-5752-50667             Shanty Bay     17-5752-50667            <NA>
-    ## 5   17-5480-51138             Shanty Bay     17-5480-51138            <NA>
-    ## 6   15-5163-56645             Shanty Bay     15-5163-56645            <NA>
-    ## 7   18-2949-50620       Burnt Shanty Bay     18-2949-50620            <NA>
+    ##   WATERBODY_IDENT          OFFICIAL_NAME UNOFFICIAL_NAME
+    ## 1   17-5752-50666       Shanty Bay Lakes            <NA>
+    ## 2   17-6195-49857             Shanty Bay            <NA>
+    ## 3   17-5752-50668 Middle Shanty Bay Lake            <NA>
+    ## 4   17-5752-50667             Shanty Bay            <NA>
+    ## 5   17-5480-51138             Shanty Bay            <NA>
+    ## 6   15-5163-56645             Shanty Bay            <NA>
+    ## 7   18-2949-50620       Burnt Shanty Bay            <NA>
     ##   OFFICIAL_ALTERNATE_NAME EQUIVALENT_FRENCH_NAME                       geometry
     ## 1                    <NA> lacs de la baie Shanty MULTIPOLYGON (((-80.03624 4...
     ## 2                    <NA>            baie Shanty POLYGON ((-79.48439 45.0152...
@@ -235,71 +230,59 @@ wby <- fetch_waterbody(wbylid = "15-3726-54565")
 print(
   wby[
     ,
-    c(
-      "WATERBODY_IDENT",
-      "OFFICIAL_NAME",
-      "WATERBODY_IDENT",
-      "UNOFFICIAL_NAME",
-      "OFFICIAL_ALTERNATE_NAME",
-      "EQUIVALENT_FRENCH_NAME"
-    )
+    fields
   ]
 )
 ```
 
-    ## Simple feature collection with 1 feature and 6 fields
+    ## Simple feature collection with 1 feature and 5 fields
     ## Geometry type: POLYGON
     ## Dimension:     XY
     ## Bounding box:  xmin: -95.07566 ymin: 48.84562 xmax: -93.82818 ymax: 49.77069
     ## Geodetic CRS:  WGS 84
-    ##   WATERBODY_IDENT     OFFICIAL_NAME WATERBODY_IDENT.1 UNOFFICIAL_NAME
-    ## 1   15-3726-54565 Lake of the Woods     15-3726-54565            <NA>
-    ##   OFFICIAL_ALTERNATE_NAME EQUIVALENT_FRENCH_NAME                       geometry
-    ## 1            lac des Bois                   <NA> POLYGON ((-95.07566 49.3717...
+    ##   WATERBODY_IDENT     OFFICIAL_NAME UNOFFICIAL_NAME OFFICIAL_ALTERNATE_NAME
+    ## 1   15-3726-54565 Lake of the Woods            <NA>            lac des Bois
+    ##   EQUIVALENT_FRENCH_NAME                       geometry
+    ## 1                   <NA> POLYGON ((-95.07566 49.3717...
 
 ``` r
 # three lakes in close proximity to each other:
 # "15-4877-53939" Rainy Lake
-# "15-3726-54565" Lake of the woods
+# "15-3726-54565" Lake of the Woods
 # "15-4390-54514" Kakagi Lake
 
-wbylids <- c("15-4877-53939",
+wbylids <- c(
+  "15-4877-53939",
   "15-3726-54565",
-  "15-4390-54514")
+  "15-4390-54514"
+)
 
 wby <- fetch_waterbody(wbylid = wbylids)
 print(
   wby[
     ,
-    c(
-      "WATERBODY_IDENT",
-      "OFFICIAL_NAME",
-      "WATERBODY_IDENT",
-      "UNOFFICIAL_NAME",
-      "OFFICIAL_ALTERNATE_NAME",
-      "EQUIVALENT_FRENCH_NAME"
-    )
+    fields
   ]
 )
 ```
 
-    ## Simple feature collection with 3 features and 6 fields
+    ## Simple feature collection with 3 features and 5 fields
     ## Geometry type: GEOMETRY
     ## Dimension:     XY
     ## Bounding box:  xmin: -95.07566 ymin: 48.48244 xmax: -92.54676 ymax: 49.77069
     ## Geodetic CRS:  WGS 84
-    ##   WATERBODY_IDENT     OFFICIAL_NAME WATERBODY_IDENT.1 UNOFFICIAL_NAME
-    ## 1   15-4390-54514       Kakagi Lake     15-4390-54514            <NA>
-    ## 2   15-4877-53939        Rainy Lake     15-4877-53939            <NA>
-    ## 3   15-3726-54565 Lake of the Woods     15-3726-54565            <NA>
-    ##   OFFICIAL_ALTERNATE_NAME EQUIVALENT_FRENCH_NAME                       geometry
-    ## 1                    <NA>             lac Kakagi POLYGON ((-93.67178 49.2067...
-    ## 2          lac à la Pluie                   <NA> MULTIPOLYGON (((-93.63527 4...
-    ## 3            lac des Bois                   <NA> POLYGON ((-95.07566 49.3717...
+    ##   WATERBODY_IDENT     OFFICIAL_NAME UNOFFICIAL_NAME OFFICIAL_ALTERNATE_NAME
+    ## 1   15-4390-54514       Kakagi Lake            <NA>                    <NA>
+    ## 2   15-4877-53939        Rainy Lake            <NA>          lac à la Pluie
+    ## 3   15-3726-54565 Lake of the Woods            <NA>            lac des Bois
+    ##   EQUIVALENT_FRENCH_NAME                       geometry
+    ## 1             lac Kakagi POLYGON ((-93.67178 49.2067...
+    ## 2                   <NA> MULTIPOLYGON (((-93.63527 4...
+    ## 3                   <NA> POLYGON ((-95.07566 49.3717...
 
 ``` r
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = wby, aes(fill = WATERBODY_IDENT))
+  ggplot2::geom_sf(data = wby, ggplot2::aes(fill = WATERBODY_IDENT))
 print(my_plot)
 ```
 
@@ -333,7 +316,7 @@ unique(ppark$COMMON_SHORT_NAME)
 
 ``` r
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = ppark, aes(fill = COMMON_SHORT_NAME))
+  ggplot2::geom_sf(data = ppark, ggplot2::aes(fill = COMMON_SHORT_NAME))
 print(my_plot)
 ```
 
@@ -366,7 +349,7 @@ unique(twnshp$OFFICIAL_NAME)
 
 ``` r
 my_plot <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = twnshp, aes(fill = OFFICIAL_NAME))
+  ggplot2::geom_sf(data = twnshp, ggplot2::aes(fill = OFFICIAL_NAME))
 print(my_plot)
 ```
 
